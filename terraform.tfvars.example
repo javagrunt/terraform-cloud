@@ -1,0 +1,16 @@
+token =
+tfe_organization_name =
+tfe_organization_email =
+tfe_workspace_name =
+subscription_id =
+tenant_id =
+client_id =
+client_secret =
+location =
+default_name =
+acrb_name =
+acre_name =
+acre_resource_group =
+vnet_name =
+vcs_repo_id =
+vcs_repo_token =
