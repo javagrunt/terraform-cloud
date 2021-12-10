@@ -5,7 +5,7 @@ terraform {
     }
   }
   backend "remote" {
-    organization = "dashaun"
+    organization = "javagrunt"
 
     workspaces {
       name = "tfe-javagrunt"
