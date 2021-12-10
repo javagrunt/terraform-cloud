@@ -1,4 +1,4 @@
 resource "tfe_organization" "javagrunt" {
-  name  = "javagrunt-test"
+  name  = "javagrunt"
   email = "dashaun@dashaun.com"
 }
