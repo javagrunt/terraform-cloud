@@ -1,37 +1,37 @@
-name: "Terraform"
+name: "Terraform Cloud Remote Dispatch Action Handler"
 
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+on: [repository_dispatch]
 
 jobs:
   terraform:
-    name: "Terraform"
     runs-on: ubuntu-latest
     steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
+
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v2.0.2
         with:
-          # terraform_version: 0.13.0:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      - name: Terraform Format
-        id: fmt
-        run: terraform fmt -check
-
-      - name: Terraform Init
-        id: init
-        run: terraform init -upgrade
-
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate -no-color
-
-      - name: Terraform Apply
-        id: apply
-        run: terraform apply -auto-approve
+#      - name: Initialize Workspace
+#        if: github.event.action == 'init'
+#        env:
+#          TF_WORKSPACE:
+#        run: |
+#          curl -X POST https://api.github.com/repos/marcnuri-demo/actions-remote-dispatch-a/dispatches \
+#          -H 'Accept: application/vnd.github.everest-preview+json' \
+#          -u ${{ secrets.ACCESS_TOKEN }} \
+#          --data '{"event_type": "pong", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+#
+#      - name: Terraform Init
+#        id: init
+#        run: terraform init
+#        env:
+#          TF_WORKSPACE: "dev"
